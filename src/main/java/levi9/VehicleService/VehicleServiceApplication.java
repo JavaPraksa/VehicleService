@@ -12,19 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @EnableEurekaClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = {"levi9.UserService.api"})
+@EnableFeignClients(clients = UserServiceApi.class)
 @RestController
 public class VehicleServiceApplication {
-	@Autowired
-	private UserServiceApi userServiceApi;
 
 	public static void main(String[] args) {
 		SpringApplication.run(VehicleServiceApplication.class, args);
 	}
 
-	@GetMapping("/")
-	public Example1 example(){
-		userServiceApi.example();
-		return userServiceApi.example();
-	}
 }
