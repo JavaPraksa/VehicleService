@@ -1,7 +1,14 @@
 package levi9.VehicleService.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Vehicle {
     @Id
@@ -20,38 +27,4 @@ public class Vehicle {
     @ManyToOne
     private Address address;
 
-    public Vehicle() {
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 }

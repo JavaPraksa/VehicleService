@@ -1,8 +1,15 @@
 package levi9.VehicleService.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Rent {
     @Id
@@ -26,54 +33,5 @@ public class Rent {
     @ManyToOne
     private Address endAddress;
 
-    public Rent() {
-    }
 
-    public Long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    public Address getStartAddress() {
-        return startAddress;
-    }
-
-    public void setStartAddress(Address startAddress) {
-        this.startAddress = startAddress;
-    }
-
-    public Address getEndAddress() {
-        return endAddress;
-    }
-
-    public void setEndAddress(Address endAddress) {
-        this.endAddress = endAddress;
-    }
 }
