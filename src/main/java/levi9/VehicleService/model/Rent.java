@@ -24,13 +24,13 @@ public class Rent {
 
     private LocalDateTime endTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Vehicle vehicle;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address startAddress;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address endAddress;
 
 
