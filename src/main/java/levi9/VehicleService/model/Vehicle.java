@@ -24,7 +24,7 @@ public class Vehicle {
     @Column(nullable = false)
     private double price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
 
 }
