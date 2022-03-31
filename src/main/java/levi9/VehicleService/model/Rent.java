@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Rent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
