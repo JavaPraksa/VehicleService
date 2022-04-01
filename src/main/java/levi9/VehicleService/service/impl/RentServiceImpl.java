@@ -6,7 +6,7 @@ import levi9.VehicleService.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,7 +25,8 @@ public class RentServiceImpl implements RentService {
     }
 
     private boolean isRentActive(Rent r){
-        //TODO: compare dates
+        if (r.getEndTime() == null || r.getEndTime().isAfter(LocalDateTime.now()))
+            return true;
         return false;
     }
 
