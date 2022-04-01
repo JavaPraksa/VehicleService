@@ -19,5 +19,4 @@ INSERT INTO vehicleservice.rent (client_id, end_time, start_time, end_address_id
     (2, DATE '2022-04-01 08:23:51', DATE '2022-03-14', 1, 1, 1),
     (2, NULL, DATE '2022-04-01', 1, 3, 2),
     (2, DATE '2021-09-29', DATE '2021-08-07', 2, 3, 3),
-    (2, DATE '2022-04-16', DATE '2022-03-14', 1, 3, 4),
-    (2, NULL , DATE '2022-03-14', 4, 2, 5);
+    (2, DATE '2022-04-16', DATE '2022-03-14', 1, 3, 4);
