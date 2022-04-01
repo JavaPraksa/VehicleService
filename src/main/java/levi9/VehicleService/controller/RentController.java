@@ -2,6 +2,7 @@ package levi9.VehicleService.controller;
 
 import levi9.UserService.api.UserServiceApi;
 import levi9.VehicleService.dto.AddressDto;
+import levi9.VehicleService.dto.FinishRentDto;
 import levi9.VehicleService.dto.RentedVehicleDto;
 import levi9.VehicleService.exception.BadRequestException;
 import levi9.VehicleService.service.AddressService;
@@ -9,10 +10,7 @@ import levi9.VehicleService.service.RentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,8 +27,14 @@ public class RentController {
         return ResponseEntity.ok(rentService.getCurrentlyRentedVehicle(clientId));
     }
 
-    @GetMapping("/getAllGarages")
+    @GetMapping("/garages")
     public ResponseEntity<List<AddressDto>> getAllGarages() {
         return ResponseEntity.ok(addressService.getAllGarages());
+    }
+
+    @PutMapping("/finish")
+    public ResponseEntity<Void> finishRent(@RequestBody FinishRentDto finishRentDto) {
+        rentService.finishRent(finishRentDto);
+        return ResponseEntity.ok().build();
     }
 }
