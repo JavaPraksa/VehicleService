@@ -16,9 +16,9 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public boolean isVehicleRented(Long vehicleId){
-        List<Rent> allRents = rentRepository.findAll();
+        List<Rent> allRents = rentRepository.findByVehicleId(vehicleId);
         for(Rent r : allRents){
-            if (r.getVehicle().getId().equals(vehicleId) && isRentActive(r))
+            if (isRentActive(r))
                 return true;
         }
         return false;
@@ -29,6 +29,4 @@ public class RentServiceImpl implements RentService {
             return true;
         return false;
     }
-
-
 }
