@@ -1,5 +1,6 @@
 package levi9.VehicleService.controller;
 
+import levi9.VehicleService.dto.VehicleDto;
 import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @GetMapping("/available-vehicles")
-    public ResponseEntity<List<Vehicle>> findAvailableVehicles(){
+    public ResponseEntity<List<VehicleDto>> findAvailableVehicles(){
         return ResponseEntity.ok(vehicleService.findAvailableVehicles());
     }
 
