@@ -17,7 +17,7 @@ import java.util.List;
 public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
     private RentService rentService;
-    private final ModelMapper mapper = new ModelMapper();
+    private final ModelMapper mapper;
 
     @Override
     public List<VehicleDto> findAvailableVehicles() {
