@@ -5,6 +5,7 @@ import levi9.VehicleService.dto.RentedVehicleDto;
 import levi9.VehicleService.exception.BadRequestException;
 import levi9.VehicleService.model.Address;
 import levi9.VehicleService.model.Rent;
+import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.repository.AddressRepository;
 import levi9.VehicleService.repository.RentRepository;
 import levi9.VehicleService.repository.VehicleRepository;
@@ -45,13 +46,14 @@ public class RentServiceImpl implements RentService {
     @Override
     public void finishRent(FinishRentDto finishRent) {
         Rent rent = rentRepository.findById(finishRent.getRentId()).orElseThrow(() -> new BadRequestException("Rent is not found"));
-        Address address = addressRepository.findById(finishRent.getRentId()).orElseThrow(() -> new BadRequestException("Address is not found"));
+        Address address = addressRepository.findById(finishRent.getAddressId()).orElseThrow(() -> new BadRequestException("Address is not found"));
 
         rent.setEndTime(LocalDateTime.now());
         rent.setEndAddress(address);
-        rent.getVehicle().setAddress(address);
+        Vehicle vehicle = rent.getVehicle();
+        vehicle.setAddress(address);
         rentRepository.save(rent);
-        vehicleRepository.save(rent.getVehicle());
+        vehicleRepository.save(vehicle);
     }
 
     private boolean isRentActive(Rent r) {
