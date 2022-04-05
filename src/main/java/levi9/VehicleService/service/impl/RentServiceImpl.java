@@ -7,6 +7,9 @@ import levi9.VehicleService.model.Address;
 import levi9.VehicleService.model.Rent;
 import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.repository.AddressRepository;
+import levi9.VehicleService.dto.NewRentDto;
+import levi9.VehicleService.model.Rent;
+import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.repository.RentRepository;
 import levi9.VehicleService.repository.VehicleRepository;
 import levi9.VehicleService.service.RentService;
@@ -60,5 +63,15 @@ public class RentServiceImpl implements RentService {
         if (r.getEndTime() == null || r.getEndTime().isAfter(LocalDateTime.now()))
             return true;
         return false;
+    }
+
+    @Override
+    public Boolean rentVehicle(NewRentDto rentDto){
+        Vehicle rentedVehicle = vehicleRepository.findById(rentDto.getVehicleId()).orElseThrow(() -> new BadRequestException("Vehicle not found"));
+        Rent rent = Rent.builder().vehicle(rentedVehicle).clientId(rentDto.getClientId())
+                .startAddress(rentedVehicle.getAddress()).endAddress(null)
+                .startTime(LocalDateTime.now()).endTime(null).build();
+        rentRepository.save(rent);
+        return true;
     }
 }

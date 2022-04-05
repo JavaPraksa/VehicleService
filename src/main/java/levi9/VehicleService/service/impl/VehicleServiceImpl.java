@@ -6,7 +6,6 @@ import levi9.VehicleService.repository.VehicleRepository;
 import levi9.VehicleService.service.RentService;
 import levi9.VehicleService.service.VehicleService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
@@ -28,4 +27,5 @@ public class VehicleServiceImpl implements VehicleService {
         }
         return  availableVehicles;
     }
+
 }
