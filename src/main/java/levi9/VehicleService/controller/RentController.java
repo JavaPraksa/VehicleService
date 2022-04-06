@@ -4,6 +4,7 @@ import levi9.UserService.api.UserServiceApi;
 
 import levi9.VehicleService.dto.AddressDto;
 import levi9.VehicleService.dto.FinishRentDto;
+import levi9.VehicleService.dto.RentDto;
 import levi9.VehicleService.dto.RentedVehicleDto;
 import levi9.VehicleService.exception.BadRequestException;
 import levi9.VehicleService.service.AddressService;import levi9.VehicleService.service.RentService;
@@ -46,5 +47,9 @@ public class RentController {
     @PostMapping("/new")
     public ResponseEntity<Boolean> rentVehicle(@RequestBody NewRentDto rentDto){
         return ResponseEntity.ok(rentService.rentVehicle(rentDto));
+  
+    @GetMapping("/history")
+    public ResponseEntity<List<RentDto>> getRentHistory(@RequestParam Long clientId) {
+        return ResponseEntity.ok(rentService.getRentHistory(clientId));
     }
 }
