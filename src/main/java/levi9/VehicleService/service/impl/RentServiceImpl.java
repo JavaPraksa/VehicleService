@@ -16,6 +16,7 @@ import levi9.VehicleService.service.RentService;
 import levi9.VehicleService.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -66,12 +67,25 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
+    @Transactional
     public Boolean rentVehicle(NewRentDto rentDto){
-        Vehicle rentedVehicle = vehicleRepository.findById(rentDto.getVehicleId()).orElseThrow(() -> new BadRequestException("Vehicle not found"));
-        Rent rent = Rent.builder().vehicle(rentedVehicle).clientId(rentDto.getClientId())
-                .startAddress(rentedVehicle.getAddress()).endAddress(null)
-                .startTime(LocalDateTime.now()).endTime(null).build();
-        rentRepository.save(rent);
-        return true;
+        try {
+            List<Rent> allRents = rentRepository.getAllLock();
+            for (Rent r : allRents){
+                if(r.getEndTime() == null && r.getVehicle().getId().equals(rentDto.getVehicleId()))
+                    throw new BadRequestException("Vehicle is no longer available.");
+            }
+
+            Vehicle rentedVehicle = vehicleRepository.findById(rentDto.getVehicleId()).orElseThrow(() -> new BadRequestException("Vehicle not found"));
+            Rent rent = Rent.builder().vehicle(rentedVehicle).clientId(rentDto.getClientId())
+                    .startAddress(rentedVehicle.getAddress()).endAddress(null)
+                    .startTime(LocalDateTime.now()).endTime(null).build();
+            rentRepository.save(rent);
+            return true;
+        }
+        catch (Exception e){
+            throw new BadRequestException("Vehicles are locked.");
+        }
+
     }
 }
