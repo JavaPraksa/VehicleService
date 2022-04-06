@@ -3,6 +3,7 @@ package levi9.VehicleService.controller;
 import levi9.UserService.api.UserServiceApi;
 import levi9.VehicleService.dto.AddressDto;
 import levi9.VehicleService.dto.FinishRentDto;
+import levi9.VehicleService.dto.RentDto;
 import levi9.VehicleService.dto.RentedVehicleDto;
 import levi9.VehicleService.exception.BadRequestException;
 import levi9.VehicleService.service.AddressService;
@@ -36,5 +37,10 @@ public class RentController {
     public ResponseEntity<Void> finishRent(@RequestBody FinishRentDto finishRentDto) {
         rentService.finishRent(finishRentDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<RentDto>> getRentHistory(@RequestParam Long clientId) {
+        return ResponseEntity.ok(rentService.getRentHistory(clientId));
     }
 }

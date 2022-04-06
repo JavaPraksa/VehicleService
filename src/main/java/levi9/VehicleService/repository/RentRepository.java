@@ -5,10 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface RentRepository extends JpaRepository<Rent, Long> {
     List<Rent> findByVehicleId(Long id);
 
-    Rent findByClientIdAndEndTimeEquals(Long clientId, LocalDateTime endTime);
+    Optional<Rent> findByClientIdAndEndTimeIsNull(Long clientId);
+
+    List<Rent> findByClientIdAndEndTimeIsNotNull(Long clientId);
+
 }
