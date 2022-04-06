@@ -8,12 +8,16 @@ import levi9.VehicleService.model.Address;
 import levi9.VehicleService.model.Rent;
 import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.repository.AddressRepository;
+import levi9.VehicleService.dto.NewRentDto;
+import levi9.VehicleService.model.Rent;
+import levi9.VehicleService.model.Vehicle;
 import levi9.VehicleService.repository.RentRepository;
 import levi9.VehicleService.repository.VehicleRepository;
 import levi9.VehicleService.service.RentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -80,5 +84,30 @@ public class RentServiceImpl implements RentService {
         if (r.getEndTime() == null || r.getEndTime().isAfter(LocalDateTime.now()))
             return true;
         return false;
+    }
+
+    @Override
+    @Transactional
+    public Boolean rentVehicle(NewRentDto rentDto){
+        try {
+            Vehicle rentedVehicle = vehicleRepository.getByIdLock(rentDto.getVehicleId());
+
+            List<Rent> allRents = rentRepository.findByVehicleId(rentedVehicle.getId());
+            for (Rent r : allRents){
+                if(r.getEndTime() == null)
+                    throw new BadRequestException("Vehicle is no longer available.");
+            }
+
+            Rent rent = Rent.builder().vehicle(rentedVehicle).clientId(rentDto.getClientId())
+                    .startAddress(rentedVehicle.getAddress()).endAddress(null)
+                    .startTime(LocalDateTime.now()).endTime(null).build();
+
+            rentRepository.save(rent);
+            return true;
+        }
+        catch (Exception e){
+            throw new BadRequestException("Vehicles are locked.");
+        }
+
     }
 }
