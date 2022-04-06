@@ -70,16 +70,18 @@ public class RentServiceImpl implements RentService {
     @Transactional
     public Boolean rentVehicle(NewRentDto rentDto){
         try {
-            List<Rent> allRents = rentRepository.getAllLock();
+            Vehicle rentedVehicle = vehicleRepository.getByIdLock(rentDto.getVehicleId());
+
+            List<Rent> allRents = rentRepository.findByVehicleId(rentedVehicle.getId());
             for (Rent r : allRents){
-                if(r.getEndTime() == null && r.getVehicle().getId().equals(rentDto.getVehicleId()))
+                if(r.getEndTime() == null)
                     throw new BadRequestException("Vehicle is no longer available.");
             }
 
-            Vehicle rentedVehicle = vehicleRepository.findById(rentDto.getVehicleId()).orElseThrow(() -> new BadRequestException("Vehicle not found"));
             Rent rent = Rent.builder().vehicle(rentedVehicle).clientId(rentDto.getClientId())
                     .startAddress(rentedVehicle.getAddress()).endAddress(null)
                     .startTime(LocalDateTime.now()).endTime(null).build();
+
             rentRepository.save(rent);
             return true;
         }
