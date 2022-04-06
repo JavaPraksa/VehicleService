@@ -45,8 +45,9 @@ public class RentController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Boolean> rentVehicle(@RequestBody NewRentDto rentDto){
+    public ResponseEntity<Boolean> rentVehicle(@RequestBody NewRentDto rentDto) {
         return ResponseEntity.ok(rentService.rentVehicle(rentDto));
+    }
   
     @GetMapping("/history")
     public ResponseEntity<List<RentDto>> getRentHistory(@RequestParam Long clientId) {
