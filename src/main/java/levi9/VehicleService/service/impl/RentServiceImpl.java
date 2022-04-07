@@ -65,7 +65,7 @@ public class RentServiceImpl implements RentService {
     public List<RentDto> getRentHistory(Long clientId) {
         return rentRepository.findByClientIdAndEndTimeIsNotNull(clientId).stream()
                 .map(rent -> RentDto.builder()
-                        .days((int)Math.ceil(rent.getStartTime().until(rent.getEndTime(), ChronoUnit.DAYS)))
+                        .days((int) (rent.getStartTime().until(rent.getEndTime(), ChronoUnit.DAYS)+1))
                         .price(rent.getVehicle().getPrice())
                         .model(rent.getVehicle().getModel())
                         .startStreet(rent.getStartAddress().getStreet())
