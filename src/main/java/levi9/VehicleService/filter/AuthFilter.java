@@ -20,6 +20,10 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        if(request.getRequestURI().startsWith("/vehicle-socket-endpoint")){
+            filterChain.doFilter(request, response);
+            return;
+        }
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Headers", "authorization, content-type");
         response.addHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE");
