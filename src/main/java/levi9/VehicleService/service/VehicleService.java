@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface VehicleService {
     List<VehicleDto> findAvailableVehicles();
+
+    VehicleDto getVehicleById(Long id);
+
+    VehicleDto updateVehicleById(Long id,VehicleDto vehicleDetails);
+
 }

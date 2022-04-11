@@ -11,6 +11,7 @@ import levi9.VehicleService.service.AddressService;import levi9.VehicleService.s
 import levi9.VehicleService.dto.NewRentDto;
 import levi9.VehicleService.model.Rent;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ import java.util.List;
 public class RentController {
     private final RentService rentService;
     private final AddressService addressService;
+
+
 
     @GetMapping("/currently-rented-vehicle")
     public ResponseEntity<RentedVehicleDto> currentlyRentedVehicle(@RequestParam Long clientId) {

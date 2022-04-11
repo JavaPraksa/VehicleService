@@ -6,9 +6,7 @@ import levi9.VehicleService.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,21 @@ public class VehicleController {
     public ResponseEntity<List<VehicleDto>> findAvailableVehicles(){
         return ResponseEntity.ok(vehicleService.findAvailableVehicles());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VehicleDto> getVehicleById(@PathVariable Long id) {
+        VehicleDto vehicleDto = vehicleService.getVehicleById(id);
+        return ResponseEntity.ok(vehicleDto);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{id}")
+    public ResponseEntity<VehicleDto> updateVehicleById(@PathVariable Long id,@RequestBody VehicleDto vehicleDetails) {
+        VehicleDto vehicleDto = vehicleService.updateVehicleById(id,vehicleDetails);
+        return ResponseEntity.ok(vehicleDto);
+    }
+
+
 
 
 }

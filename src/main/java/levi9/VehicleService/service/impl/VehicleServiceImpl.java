@@ -28,4 +28,25 @@ public class VehicleServiceImpl implements VehicleService {
         return  availableVehicles;
     }
 
+    @Override
+    public VehicleDto getVehicleById(Long id){
+        return mapper.map(vehicleRepository.getByIdLock(id),VehicleDto.class);
+    }
+
+    @Override
+    public VehicleDto updateVehicleById(Long id,VehicleDto vehicleDetails){
+        Vehicle oldVehicle = vehicleRepository.getByIdLock(id);
+
+        oldVehicle.setDetails(vehicleDetails.getDetails());
+        oldVehicle.setAddress(vehicleDetails.getAddress());
+        oldVehicle.setModel(vehicleDetails.getModel());
+        oldVehicle.setPrice(vehicleDetails.getPrice());
+
+        Vehicle newVehicle = vehicleRepository.save(oldVehicle);
+
+        return mapper.map(newVehicle,VehicleDto.class);
+
+
+    }
+
 }

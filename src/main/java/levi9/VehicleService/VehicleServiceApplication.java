@@ -1,5 +1,5 @@
 package levi9.VehicleService;
-
+//import levi9.NotificationService.api.NotificationServiceApi;
 import levi9.UserService.api.UserServiceApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @EnableEurekaClient
 @SpringBootApplication
-@EnableFeignClients(clients = UserServiceApi.class)
+@EnableFeignClients(clients = {UserServiceApi.class/*,NotificationServiceApi.class*/})
 @RestController
 public class VehicleServiceApplication {
 
