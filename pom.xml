@@ -18,6 +18,7 @@
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
 
 		<user-service-api.version>0.0.1-SNAPSHOT</user-service-api.version>
+		<notification-service-api.version>0.0.1-SNAPSHOT</notification-service-api.version>
 
 	</properties>
 	<dependencies>
@@ -55,6 +56,19 @@
 			<groupId>levi9</groupId>
 			<artifactId>UserService</artifactId>
 			<version>${user-service-api.version}</version>
+			<classifier>api</classifier>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>levi9</groupId>
+			<artifactId>NotificationService</artifactId>
+			<version>${notification-service-api.version}</version>
 			<classifier>api</classifier>
 			<exclusions>
 				<exclusion>
