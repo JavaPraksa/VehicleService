@@ -8,6 +8,8 @@ import levi9.VehicleService.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    @Transactional
     public VehicleDto getVehicleById(Long id){
         return mapper.map(vehicleRepository.getByIdLock(id),VehicleDto.class);
     }

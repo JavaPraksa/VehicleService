@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +33,10 @@ public class RentController {
     private final AddressService addressService;
     private final VehicleService vehicleService;
 
-    @Autowired
+
     private UserServiceApi userServiceApi;
 
-    @Autowired
+
     private NotificationServiceApi notificationServiceApi;
 
 
@@ -57,6 +58,7 @@ public class RentController {
     }
 
     @PostMapping("/new")
+    @Transactional
     public ResponseEntity<Boolean> rentVehicle(@RequestBody NewRentDto rentDto) {
         String  loggedUserEmail = userServiceApi.getUserEmailById(rentDto.getClientId());
         String vehicleModel = vehicleService.getVehicleById(rentDto.getVehicleId()).getModel();
