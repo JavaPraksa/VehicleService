@@ -1,5 +1,6 @@
 package levi9.VehicleService.controller;
 
+import levi9.NotificationService.api.NotificationServiceApi;
 import levi9.UserService.api.UserServiceApi;
 
 import levi9.VehicleService.dto.AddressDto;
@@ -10,9 +11,12 @@ import levi9.VehicleService.exception.BadRequestException;
 import levi9.VehicleService.service.AddressService;import levi9.VehicleService.service.RentService;
 import levi9.VehicleService.dto.NewRentDto;
 import levi9.VehicleService.model.Rent;
+import levi9.VehicleService.service.VehicleService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +31,15 @@ import java.util.List;
 public class RentController {
     private final RentService rentService;
     private final AddressService addressService;
+    private final VehicleService vehicleService;
+
+
+    private UserServiceApi userServiceApi;
+
+
+    private NotificationServiceApi notificationServiceApi;
+
+
 
     @GetMapping("/currently-rented-vehicle")
     public ResponseEntity<RentedVehicleDto> currentlyRentedVehicle(@RequestParam Long clientId) {
@@ -45,7 +58,13 @@ public class RentController {
     }
 
     @PostMapping("/new")
+    @Transactional
     public ResponseEntity<Boolean> rentVehicle(@RequestBody NewRentDto rentDto) {
+        String  loggedUserEmail = userServiceApi.getUserEmailById(rentDto.getClientId());
+        String vehicleModel = vehicleService.getVehicleById(rentDto.getVehicleId()).getModel();
+
+        notificationServiceApi.sendsesMessageRenting(loggedUserEmail,rentDto.getVehicleId(),vehicleModel);
+
         return ResponseEntity.ok(rentService.rentVehicle(rentDto));
     }
   

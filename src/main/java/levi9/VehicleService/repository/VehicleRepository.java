@@ -13,4 +13,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query("SELECT v FROM Vehicle v WHERE v.id = ?1")
     @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "1000")})
     Vehicle getByIdLock(Long vehicleId);
+
 }
