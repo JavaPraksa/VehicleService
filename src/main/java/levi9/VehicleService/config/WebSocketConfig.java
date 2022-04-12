@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/vehicle-socket-endpoint")
-                .setAllowedOrigins("http://localhost:4200")
+                .setAllowedOrigins("http://localhost:4200", "http://internship-rent-a-car.s3-website.eu-south-1.amazonaws.com/")
                 .withSockJS();
     }
 }
